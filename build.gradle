@@ -1,26 +1,27 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+android {
+    // Usamos la API 30 para que sea compatible con Android 11
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
-buildscript {
-    repositories {
-        // En versiones viejas, se pone la URL completa en lugar de google()
-        maven { url "https://maven.google.com" }
-        mavenCentral()
-        jcenter()
+    defaultConfig {
+        applicationId "com.bri3d.kwpandroidlogger"
+        minSdkVersion 15
+        targetSdkVersion 30 // Target Android 11
+        versionCode 1
+        versionName "1.0"
     }
-    dependencies {
-        // Bajamos un escalón a la 2.1.0 que es más compatible con Gradle 2.10
-        classpath 'com.android.tools.build:gradle:2.1.0'
-    }
-}
 
-allprojects {
-    repositories {
-        maven { url "https://maven.google.com" }
-        mavenCentral()
-        jcenter()
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Importante: En Gradle 2.1.0 se usa 'proguardFiles'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    
+    // Añadimos esto para evitar errores de compatibilidad de Java en el empaquetado
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
